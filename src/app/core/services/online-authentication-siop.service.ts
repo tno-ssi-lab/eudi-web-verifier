@@ -11,6 +11,7 @@ import { AGE_ATTESTATION_OVER_18_PD } from '../data/age_attestation_pd';
 import { MsoMdocPresentationService } from "@app/core/services/mso-mdoc-presentation.service";
 import { PID_MSO_MDOC } from '@core/data/pid_msoMdoc';
 import { MDL_MSO_MDOC } from "@core/data/mdl_msoMdoc";
+import { CUSTOMID_MSO_MDOC } from "@core/data/customid_msoMdoc";
 
 @Injectable()
 export class OnlineAuthenticationSIOPService {
@@ -71,4 +72,17 @@ export class OnlineAuthenticationSIOPService {
 				tap((res) => { this.localStorageService.set(constants.UI_PRESENTATION, JSON.stringify(res));})
 			);
 	}
+
+	initCUSTOMIDPresentationTransaction(presentationPurpose: string): Observable<PresentationDefinitionResponse> {
+		let CUSTOMID_FULL_PD = this.msoMdocPresentationService.presentationOf(CUSTOMID_MSO_MDOC, presentationPurpose)
+		const payload: any = {...CUSTOMID_FULL_PD};
+			payload.nonce = uuidv4();
+			if (!this.deviceDetectorService.isDesktop()) {
+				payload['wallet_response_redirect_uri_template'] = location.origin+'/get-wallet-code?response_code={RESPONSE_CODE}';
+			}
+			return this.httpService.post<PresentationDefinitionResponse, any>('ui/presentations', payload)
+				.pipe(
+					tap((res) => { this.localStorageService.set(constants.UI_PRESENTATION, JSON.stringify(res));})
+				);
+		}
 }

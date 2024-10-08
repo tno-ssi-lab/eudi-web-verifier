@@ -15,6 +15,13 @@
           <vc-body-actions [actions]="actions" (clicked)="submit()"></vc-body-actions>
         </ng-container>
       </mat-tab>
+      <mat-tab #customid label="customID authentication">
+        <ng-container *ngIf="customid.isActive">
+          <vc-input-scheme></vc-input-scheme>
+          <vc-radio-group [options]="optionsCUSTOMIDAuthentication" (choseEvent)="setNavigateTarget($event)"></vc-radio-group>
+          <vc-body-actions [actions]="actions" (clicked)="submit()"></vc-body-actions>
+        </ng-container>
+      </mat-tab>
       <mat-tab #ageVerification label="Age verification">
         <ng-container *ngIf="ageVerification.isActive">
           <vc-input-scheme></vc-input-scheme>

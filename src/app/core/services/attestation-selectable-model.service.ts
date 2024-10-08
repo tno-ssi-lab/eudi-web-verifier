@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Presentation} from "@features/selectable-presentation/models/Presentation";
 import {PID_MSO_MDOC} from '@core/data/pid_msoMdoc';
 import {MDL_MSO_MDOC} from '@core/data/mdl_msoMdoc';
+import {CUSTOMID_MSO_MDOC} from '@core/data/customid_msoMdoc';
 import {MsoMdoc} from "@core/models/msoMdoc";
 
 @Injectable({
@@ -19,6 +20,8 @@ export class AttestationSelectableModelService {
   setModel(attestation: string) {
     if (attestation == 'MDL') {
       this.selectableModel = MDL_MSO_MDOC;
+    } else if (attestation == 'CUSTOMID') {
+      this.selectableModel = CUSTOMID_MSO_MDOC;
     } else if (attestation == 'PID') {
       this.selectableModel = PID_MSO_MDOC;
     }

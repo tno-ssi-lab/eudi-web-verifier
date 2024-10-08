@@ -37,6 +37,14 @@ const routes: Routes = [
 		loadChildren: () => import('./features/cbor/cbor.module').
 			then(m => m.CborModule )
 	},
+	{ path: 'customid-selectable',
+	loadChildren: () => import('@features/selectable-presentation/selectable-presentation.module').
+	then(m => m.SelectablePresentationModule ),
+	},
+	{ path: 'customid-full',
+		loadChildren: () => import('./features/cbor/cbor.module').
+			then(m => m.CborModule )
+	},
 	{
 		path: 'get-wallet-code',
 		loadComponent: () => import('./features/wallet-redirect/wallet-redirect.component').then(c => c.WalletRedirectComponent),

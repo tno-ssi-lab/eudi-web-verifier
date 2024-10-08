@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
 	optionsCustomRequest: MenuOption[] = [];
 	optionsPIDAuthentication: MenuOption[] = [];
 	optionsMDLAuthentication: MenuOption[] = [];
+	optionsCUSTOMIDAuthentication: MenuOption[] = [];
 	optionsAgeVerification: MenuOption[] = [];
 
 	private dialog: MatDialog = inject(MatDialog);
@@ -59,6 +60,7 @@ export class HomeComponent implements OnInit {
 		this.optionsCustomRequest = this.homeService.optionsCustomRequest;
 		this.optionsPIDAuthentication = this.homeService.optionsPIDAuthentication;
 		this.optionsMDLAuthentication = this.homeService.optionsMDLAuthentication;
+		this.optionsCUSTOMIDAuthentication = this.homeService.optionsCUSTOMIDAuthentication;
 		this.optionsAgeVerification = this.homeService.optionsAgeVerification;
 	}
 
@@ -77,6 +79,10 @@ export class HomeComponent implements OnInit {
 			this.navTarget = 'cbor-selectable/mdl-create';
 		} else if (choose === 'MDL_Full') {
 			this.navTarget = 'mdl-full';
+		} else if (choose === 'CUSTOMID_Full') {
+			this.navTarget = 'customid-full';
+		} else if (choose === 'CUSTOMID_Selectable') {
+			this.navTarget = 'cbor-selectable/customid-create';
 		} else if (choose === 'PD_Custom_Request') {
 			this.navTarget = 'custom-request';
 		}
@@ -111,6 +117,19 @@ export class HomeComponent implements OnInit {
 			const presentationPurpose = 'We need to verify your mobile driving licence';
 			this.attestationSelectableModelService.setPresentationPurpose(presentationPurpose);
 			this.attestationSelectableModelService.setModel('MDL');
+			this.navigateService.navigateTo('cbor-selectable/create');
+
+		} else if (this.navTarget === 'customid-full') {
+			const presentationPurpose = 'We need to verify your custom ID';
+			this.onlineAuthenticationSIOPService.initCUSTOMIDPresentationTransaction(presentationPurpose).subscribe((data) => {
+				this.dataService.setQRCode(data);
+				this.navigateService.navigateTo(this.navTarget);
+			});
+
+		} else if (this.navTarget === 'cbor-selectable/customid-create') {
+			const presentationPurpose = 'We need to verify your custom ID';
+			this.attestationSelectableModelService.setPresentationPurpose(presentationPurpose);
+			this.attestationSelectableModelService.setModel('CUSTOMID');
 			this.navigateService.navigateTo('cbor-selectable/create');
 
 		} else if (this.navTarget === 'pid-age-over-18') {

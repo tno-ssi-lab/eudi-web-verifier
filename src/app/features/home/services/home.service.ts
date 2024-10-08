@@ -28,6 +28,18 @@ export class HomeService {
 			isDisabled: false,
 		}
 	];
+	optionsCUSTOMIDAuthentication: MenuOption[] = [
+		{
+			key: 'CUSTOMID_Selectable',
+			value: 'Request to share specific attributes from customID',
+			isDisabled: false,
+		},
+		{
+			key: 'CUSTOMID_Full',
+			value: 'Request for the entire customID',
+			isDisabled: false,
+		}
+	];
 	optionsAgeVerification: MenuOption[] = [
 		{
 			key: 'AgeOver18_attestation',
